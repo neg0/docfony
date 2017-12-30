@@ -6,7 +6,7 @@
 
 ## Requirements 
 * Operating Systems supported by Docker _<small>(Please checkout <a href="https://docs.docker.com/engine/installation/#supported-platforms" target="_blank">Supported platforms</a>)</small>_
-* Docker version 17.x _<small>(Please visit <a href="https://docs.docker.com/engine/installation/#supported-platforms" target="_blank">Docker Community Edition</a>)</small>_
+* Docker version 17.x _<small>(Please visit <a href="https://www.docker.com/community-edition" target="_blank">Docker Community Edition</a>)</small>_
 * Docker Compose  should be enabled
 * Symfony Framework 3.x
 
@@ -74,7 +74,7 @@ $ docker network inspect docfony_symfony_dev --format="{{json .IPAM.Config}}"
 ```
 Now you may navigate to ```project/symfony_app/web/app_dev.php``` and edit line 15, you should see an array of ```['127.0.0.1', '::1']```, which should be extended further by adding network Gateway IP address. To see if debug toolbar appears or you can see development feature of symfony, please navigate to the following via your browser: ```http://localhots/app_dev.php```.
 
-###Docker Cheat-sheet
+### Docker Cheat-sheet
 I have listed few commands you might find useful if you don't have much experience working with Docker below.
 
 ```terminal
@@ -102,6 +102,6 @@ $ docker-compose build
 ```
 _If an error occurs during build or pulling images, you can continue the process again with ```build``` command_
 
-###Support and Help
+### Support and Help
 This is the early version and further documentation or code changes will occur within 15 days of release. PHP will be upgraded to version 7.2 as soon as xdebug resolves the compatibility and sodium library will also be added for the next release early January 2018.
 >_**Disclaimer:** Please don't use this to deploy in production, this project been built for Symfony enthusiasts to attract more contributors and prospect companies whom wish to give an enterprise level PHP Framework a quick try, without a worry of configuration and installation of all required packages_
