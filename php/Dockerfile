@@ -20,7 +20,8 @@ RUN apt-get update -y && apt-get install -y \
     libfontconfig1 \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install soap \
-    && docker-php-ext-install pdo mysql_pdo \
+    && docker-php-ext-install pdo \
+    && docker-php-ext-install pdo_mysql \
     && docker-php-ext-install intl \
     && docker-php-ext-install zip
 
@@ -34,7 +35,6 @@ RUN pecl update-channels \
     && pecl install xdebug-2.5.5
 
 COPY php/xdebug.ini /usr/local/etc/php/conf.d/xdebug-docker-php-ext.ini
-
 COPY php/php.ini /usr/local/etc/php/
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
