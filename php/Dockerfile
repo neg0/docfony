@@ -1,9 +1,10 @@
-FROM php:7.1-fpm AS dev
+FROM php:7.2-fpm AS dev
 
 LABEL licence = "MIT"
-LABEL maintainer = "Hadi Ta"
+LABEL maintainer = "Hadi Tajallaei"
 
 RUN apt-get update -y && apt-get install -y \
+    apt-utils \
     git \
     unzip \
     libsasl2-dev \
@@ -18,24 +19,35 @@ RUN apt-get update -y && apt-get install -y \
     libfreetype6-dev \
     libxml2-dev \
     libfontconfig1 \
+    gcc-6-base \
+    libc6 \
+    libgcc1 \
+    libsodium18 \
+    libsodium-dev \
+    libbz2-dev \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
+    && docker-php-ext-install bz2 \
+    && docker-php-ext-install opcache \
     && docker-php-ext-install soap \
-    && docker-php-ext-install pdo \
-    && docker-php-ext-install pdo_mysql \
     && docker-php-ext-install intl \
-    && docker-php-ext-install zip
+    && docker-php-ext-install zip \
+    && docker-php-ext-install pdo_mysql \
+    && docker-php-ext-install sodium
 
 RUN pecl update-channels \
     && pecl install mongodb-1.3.4 \
-    && echo "extension=mongodb.so" >> /usr/local/etc/php/conf.d/mongodb-docker-php-ext.ini \
+    && echo "extension=mongodb.so" >> /usr/local/etc/php/conf.d/docker-php-ext-mongodb.ini \
     && pecl install apcu-5.1.8 \
-    && echo "extension=apcu.so" >> /usr/local/etc/php/conf.d/apcu-docker-php-ext.ini \
+    && echo "extension=apcu.so" >> /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini \
     && pecl install amqp-1.9.3 \
-    && echo "extension=amqp.so" >> /usr/local/etc/php/conf.d/amqp-docker-php-ext.ini \
-    && pecl install xdebug-2.5.5
+    && echo "extension=amqp.so" >> /usr/local/etc/php/conf.d/docker-php-ext-amqp.ini \
+    && pecl install xdebug-2.6.0beta1
 
-COPY php/xdebug.ini /usr/local/etc/php/conf.d/xdebug-docker-php-ext.ini
-COPY php/php.ini /usr/local/etc/php/
+COPY php/config/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+
+EXPOSE 9005
+
+COPY php/config/php.ini /usr/local/etc/php/
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer --version

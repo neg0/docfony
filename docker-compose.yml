@@ -1,17 +1,19 @@
 version: '3'
 services:
   php:
-    image: php:docfony-dev-7.2
+    image: php:docfony-7.2
     build:
       context: .
       dockerfile: php/Dockerfile
+    ports:
+      - '9005:9005'
     volumes:
-      - '../project:/var/www'
+      - '../project:/var/www:cached'
     networks:
       - symfony_dev
 
   nginx:
-    image: nginx:docfony-dev-1.13
+    image: nginx:docfony-1.13
     build:
       context: .
       dockerfile: nginx/Dockerfile
@@ -19,7 +21,7 @@ services:
       - '80:80'
       - '443:443'
     volumes:
-      - '../project:/var/www'
+      - '../project:/var/www:cached'
     networks:
       - symfony_dev
 
@@ -30,9 +32,9 @@ services:
     volumes:
       - 'dev-mysql:/var/lib/mysql'
     environment:
-      MYSQL_DATABASE: 'symfony'
-      MYSQL_USER: 'root'
-      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+      MYSQL_DATABASE: "${MYSQL_DB_NAME}"
+      MYSQL_USER: "${MYSQL_USR}"
+      MYSQL_ALLOW_EMPTY_PASSWORD: "${MYSQL_EMPTY_PWD}"
     networks:
       - symfony_dev
 
@@ -41,7 +43,8 @@ services:
       ports:
         - '27017:27017'
       volumes:
-        - 'dev-mongo:/data'
+        - 'dev-mongo:/data/db'
+        - 'dev-mongo-config:/data/configdb'
       networks:
         - symfony_dev
 
@@ -52,3 +55,4 @@ networks:
 volumes:
   dev-mysql:
   dev-mongo:
+  dev-mongo-config:

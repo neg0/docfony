@@ -1,7 +1,7 @@
-FROM nginx:1.13.8 AS dev
+FROM nginx:1.13 AS dev
 
 LABEL licence = "MIT"
-LABEL maintainer = "Hadi Ta"
+LABEL maintainer = "Hadi Tajallaei"
 
 RUN mkdir -p /var/www \
     && usermod -u 5000 www-data \

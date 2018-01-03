@@ -1,5 +1,5 @@
 # Docfony - Docker Symfony 3.x
-* **PHP** _version 7.1_
+* **PHP** _version 7.2_
 * **NGINX** _version 1.13_
 * **MySQL** _version 5.7_
 * **Mongo** _version 3.4_
@@ -11,8 +11,8 @@
 * Symfony Framework 3.x
 
 ### Download and Installation
-Please ensure there is no PHP-FPM, Apache (httpd) or NGINX is running on your machine before start running the containers; after successfully cloning the repository, you should see a folder named **docfony**; please go inside the **docfony** and run ```docke-compose``` as below:
-```terminal
+Please ensure there is no PHP-FPM, Apache (httpd) or NGINX is running on your machine before start running the containers; after successfully cloning the repository, you should see a folder named **docfony**; please go inside the **docfony** and run ```docker-compose``` as below:
+```bash
 $ git clone https://github.com/impixel/docfony.git
 $ cd docfony
 $ docker-compose up
@@ -23,10 +23,10 @@ Docker daemon starts to download and build the required images to run your Symfo
 
 However for development purpose volume for Symfony application is shared with your machine (Host) and is accessible via folder outside of **docfony**, called **project**.
 
->In addition to virtual volumes, Docker will also creates a **network** with **bridge** driver named ```docfony-symfony-dev``` to make the containers to communicate with each other
+>In addition to virtual volumes, Docker will also creates a **network** with **bridge** driver named ```docfony_symfony_dev``` to make the containers to communicate with each other
 
 After successfully pulling and building the images required, you can see the log messages appearing on your terminal, please open a new terminal tab and connect to the **php** container to download and install your Symfony application as below:
-```terminal
+```bash
 $ docker-compose exec php /bin/bash
 root@d38cf:/var/www# composer create-project symfony/framework-standard-edition symfony_app 3.4
 ```
@@ -51,7 +51,7 @@ parameters:
     mailer_password: null
     secret: 18A05C51097179AA4739E0C216C49AD02727C1BD
 ```
-You may use GUI applications to manage your database by specifying ```mysql``` or ```mongo``` as a host and specified port in ```docker-compose.yml```, please use following to connect to MySQL and Mongo Database via your machine:
+You may use GUI applications to manage your database by specifying ```mysql``` or ```mongo``` as a host and specified port in ```docker-compose.yml```. Please use following to connect to MySQL, Mongo Database and Xdebug via your machine:
 
 * __MySQL Database__
     * Host: _mysql_
@@ -59,8 +59,11 @@ You may use GUI applications to manage your database by specifying ```mysql``` o
 * __Mongo Database__
     * Host: _mongo_
     * Port: _27017_
+* __Xdebug__
+    * Host: _php_
+    * Port: _9005_
 
-> **Please Note** you may also use actual IP address of each container using ```docker network inspect```, but this require more knowledge about Docker Networking; However, we discuss inspection later on for enabling Symfony debug features
+> **Please Note** you may also use IP address ```127.0.0.1``` as a host for each service instead.
 
 ### Local Development
 You can view and edit your codes via ```project``` folder outside of ```docfony``` and change on your machine will be synchronised with running containers.
@@ -68,39 +71,39 @@ You can view and edit your codes via ```project``` folder outside of ```docfony`
 
 ### Re-Activate Symfony Debug Feature
 In order to find your Gateway IP address, please run the following:
-```terminal
+```bash
 $ docker network inspect docfony_symfony_dev --format="{{json .IPAM.Config}}"
 [{"Subnet":"172.23.0.0/16","Gateway":"172.23.0.1"}]
 ```
 Now you may navigate to ```project/symfony_app/web/app_dev.php``` and edit line 15, you should see an array of ```['127.0.0.1', '::1']```, which should be extended further by adding network Gateway IP address. To see if debug toolbar appears or you can see development feature of symfony, please navigate to the following via your browser: ```http://localhots/app_dev.php```.
 
-### Docker Cheat-sheet
+### Docker Cheat sheet
 I have listed few commands you might find useful if you don't have much experience working with Docker below.
 
-```terminal
+```bash
 $ docker-compose up -d
 ```
-_Adding flag ```-d``` will make ```docker-compose``` to run containers in the background_
+<small><i>Adding flag ```-d``` will make ```docker-compose``` to run containers in the background</i></small>
 
-```terminal
+```bash
 $ docker-compose logs
 ```
-_It will displays logs in case containers running on detach mode_
+<i><small>It will displays logs in case containers running on detach mode</i></small>
 
-```terminal
+```bash
 $ docker-compose ps
 ```
-_It will display the status of running containers_
+<i><small>It will display the status of running containers</i></small>
 
-```terminal
+```bash
 $ docker-compose down
 ```
-_It should be used to terminate the process of containers_
+<i><small>It should be used to terminate the process of containers</i></small>
 
-```terminal
+```bash
 $ docker-compose build
 ```
-_If an error occurs during build or pulling images, you can continue the process again with ```build``` command_
+<i><small>If an error occurs during build or pulling images, you can continue the process again with ```build``` command</i></small>
 
 ### Support and Help
 This is the early version and further documentation or code changes will occur within 15 days of release. PHP will be upgraded to version 7.2 as soon as xdebug resolves the compatibility and sodium library will also be added for the next release early January 2018.
