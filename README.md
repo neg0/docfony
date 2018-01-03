@@ -17,9 +17,10 @@ $ git clone https://github.com/impixel/docfony.git
 $ cd docfony
 $ docker-compose up
 ```
-Docker daemon starts to download and build the required images to run your Symfony application. During process docker will create two virtual volumes for data presistency for both databases MySQL and Mongo:
+Docker daemon starts to download and build the required images to run your Symfony application. During process docker will create three virtual volumes for data presistency for both databases MySQL and Mongo:
 * __docfony-dev-mysql__ _It will store MySQL Database data files from_ ```/var/lib/mysql``` 
-* __docfony-dev-mongo__ _It will store Mongo Database data files from_ ```/data```
+* __docfony-dev-mongo__ _It will store Mongo Database data files from_ ```/data/db```
+* __docfony-dev-mongo-config__ _It will store Mongo Database data files from_ ```/data/configdb```
 
 However for development purpose volume for Symfony application is shared with your machine (Host) and is accessible via folder outside of **docfony**, called **project**.
 
@@ -83,28 +84,28 @@ I have listed few commands you might find useful if you don't have much experien
 ```bash
 $ docker-compose up -d
 ```
-<small><i>Adding flag ```-d``` will make ```docker-compose``` to run containers in the background</i></small>
+_Adding flag ```-d``` will make ```docker-compose``` to run containers in the background_
 
 ```bash
 $ docker-compose logs
 ```
-<i><small>It will displays logs in case containers running on detach mode</i></small>
+_It will displays logs in case containers running on detach mode_
 
 ```bash
 $ docker-compose ps
 ```
-<i><small>It will display the status of running containers</i></small>
+_It will display the status of running containers_
 
 ```bash
 $ docker-compose down
 ```
-<i><small>It should be used to terminate the process of containers</i></small>
+_It should be used to terminate the process of containers_
 
 ```bash
 $ docker-compose build
 ```
-<i><small>If an error occurs during build or pulling images, you can continue the process again with ```build``` command</i></small>
+_If an error occurs during build or pulling images, you can continue the process again with ```build``` command_
 
 ### Support and Help
-This is the early version and further documentation or code changes will occur within 15 days of release. PHP will be upgraded to version 7.2 as soon as xdebug resolves the compatibility and sodium library will also be added for the next release early January 2018.
+If you found an issue, please use git issues to report and if you wish to contribute to this project feel free to fork and create a pull request to the develop branch
 >_**Disclaimer:** Please don't use this to deploy in production, this project been built for Symfony enthusiasts to attract more contributors and prospect companies whom wish to give an enterprise level PHP Framework a quick try, without a worry of configuration and installation of all required packages_
