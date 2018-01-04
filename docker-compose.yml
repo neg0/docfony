@@ -1,19 +1,35 @@
 version: '3'
 services:
+  base:
+    image: docfony:base
+    build:
+      context: .
+      dockerfile: base/Dockerfile
+    networks:
+      - symfony_dev
+
+  composer-git:
+    image: docfony:composer-git
+    build:
+      context: .
+      dockerfile: composer-git/Dockerfile
+    volumes:
+      - '../project:/var/www:cached'
+    networks:
+      - symfony_dev
+
   php:
-    image: php:docfony-7.2
+    image: docfony:php-7.2
     build:
       context: .
       dockerfile: php/Dockerfile
-    ports:
-      - '9005:9005'
     volumes:
       - '../project:/var/www:cached'
     networks:
       - symfony_dev
 
   nginx:
-    image: nginx:docfony-1.13
+    image: docfony:nginx-1.13
     build:
       context: .
       dockerfile: nginx/Dockerfile

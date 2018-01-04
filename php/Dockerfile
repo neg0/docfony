@@ -1,12 +1,9 @@
-FROM php:7.2-fpm AS dev
+FROM docfony:base AS dev
 
 LABEL licence = "MIT"
 LABEL maintainer = "Hadi Tajallaei"
 
-RUN apt-get update -y && apt-get install -y \
-    apt-utils \
-    git \
-    unzip \
+RUN apt-get install -y \
     libsasl2-dev \
     libcurl4-openssl-dev \
     libssl-dev \
@@ -45,13 +42,6 @@ RUN pecl update-channels \
 
 COPY php/config/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
-EXPOSE 9005
-
 COPY php/config/php.ini /usr/local/etc/php/
-
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
-    && composer --version
-
-RUN chown -R www-data:www-data /var/www
 
 WORKDIR /var/www
