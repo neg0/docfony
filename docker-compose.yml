@@ -1,4 +1,4 @@
-version: '3'
+version: '2'
 services:
   base:
     image: docfony:base
@@ -8,21 +8,21 @@ services:
     networks:
       - symfony_dev
 
+  php:
+      image: docfony:php-7.2
+      build:
+        context: .
+        dockerfile: php/Dockerfile
+      volumes:
+        - '../project:/var/www:cached'
+      networks:
+        - symfony_dev
+
   composer-git:
     image: docfony:composer-git
     build:
       context: .
       dockerfile: composer-git/Dockerfile
-    volumes:
-      - '../project:/var/www:cached'
-    networks:
-      - symfony_dev
-
-  php:
-    image: docfony:php-7.2
-    build:
-      context: .
-      dockerfile: php/Dockerfile
     volumes:
       - '../project:/var/www:cached'
     networks:
@@ -47,10 +47,8 @@ services:
       - '3306:3306'
     volumes:
       - 'dev-mysql:/var/lib/mysql'
-    environment:
-      MYSQL_DATABASE: "${MYSQL_DB_NAME}"
-      MYSQL_USER: "${MYSQL_USR}"
-      MYSQL_ALLOW_EMPTY_PASSWORD: "${MYSQL_EMPTY_PWD}"
+    env_file:
+      - .env
     networks:
       - symfony_dev
 
@@ -67,6 +65,11 @@ services:
 networks:
   symfony_dev:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.25.0.0/16
+        gateway: 172.25.0.1
 
 volumes:
   dev-mysql:
