@@ -1,3 +1,5 @@
+# Maintainer Hadi Tajallaei
+# Licence MIT
 version: '2'
 services:
   base:
@@ -68,8 +70,8 @@ networks:
     ipam:
       driver: default
       config:
-      - subnet: 172.25.0.0/16
-        gateway: 172.25.0.1
+        - subnet: 172.25.0.0/16
+          gateway: 172.25.0.1
 
 volumes:
   dev-mysql:
