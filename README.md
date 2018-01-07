@@ -11,7 +11,7 @@
 * Symfony Framework 3.x
 
 ### Download and Installation
-Please ensure there is no similar service are running on the same ports on your host machine before start running the containers; after successfully cloning the repository, you should see a folder named **docfony**; please go inside the **docfony** and run ```docker-compose``` as below:
+Please ensure there is no similar service are running on the same ports on your host machine before start running the containers; after successfully cloning the repository, you should see a folder named **docfony**; please go inside the **docfony** and run `docker-compose` as below:
 ```bash
 $ git clone https://github.com/impixel/docfony.git
 $ cd docfony
@@ -28,7 +28,7 @@ However for development purpose volume for Symfony application is shared with yo
 
 After successfully pulling and building the images required, you can see the log messages appearing on your terminal, please open a new terminal tab and connect to the **php** container to download and install your Symfony application as below:
 ```bash
-$ docker-compose exec composer-git /bin/bash
+$ docker-compose exec php /bin/bash
 root@d38cf:/var/www# composer create-project symfony/framework-standard-edition symfony_app 3.4
 root@d38cf:/var/www# exit
 ```
@@ -62,17 +62,20 @@ You may use GUI applications to manage your database by specifying `mysql` or `m
     * Host: _mongo_
     * Port: _27017_
 * __Xdebug__
-    * Host: _php_
-    * Port: _9005_
+    * Port: _9001_
 
 > **Please Note** you may also use IP address `127.0.0.1` as a host for each service instead.
 
 ### Local Development
 You can view and edit your codes via `project` folder outside of `docfony` and change on your machine will be synchronised with running containers.
 >**Please Note** make sure your containers are running while you are making changes to your project to ensure data persistency all across containers with the host machine 
-
+>:apple: **Mac User Only** please edit the `docker-compose.yml` and add `:cached` at the end of shared volume, like an example below:
+```yml
+volumes:
+  - '../project:/var/www:cached'
+```
 ### Re-Activate Symfony Debug Feature
-Now you may navigate to `project/symfony_app/web/app_dev.php` and edit line 15, you should see an array of `['127.0.0.1', '::1']`, which should be extended further by adding network Gateway IP address `172.25.0.1`. To see if debug toolbar appears or you can see development feature of symfony, please navigate to the following via your browser: ```http://localhots/app_dev.php```.
+Now you may navigate to `project/symfony_app/web/app_dev.php` and edit line 15, you should see an array of `['127.0.0.1', '::1']`, which should be extended further by adding network Gateway IP address `172.25.0.1`. To see if debug toolbar appears or you can see development feature of symfony, please navigate to the following via your browser: `http://localhots/app_dev.php`.
 In order to find your Gateway IP address _(This IP address should be: 172.25.0.1 as specified in the compose file)_, please run the following:
 ```bash
 $ docker network inspect docfony_symfony_dev --format="{{json .IPAM.Config}}"
@@ -80,6 +83,16 @@ $ docker network inspect docfony_symfony_dev --format="{{json .IPAM.Config}}"
 ```bash
 [{"Subnet":"172.25.0.0/16","Gateway":"172.25.0.1"}]
 ```
+
+### Activating Xdebug
+By default I thought I could use Gateway IP address as `remote_host` for all operating systems 
+but since it caused an issue for Mac OS after a brief research in docker forums, I found an 
+answer that actually worked, please add IP address `10.254.254.254` to create an alias for your 
+Mac loop-back interface by running the command below:
+```bash
+$ sudo ifconfig en0 alias 10.254.254.254 255.255.255.0
+```
+and now you could start your remote debug session via browser: `http://docfony.dev/?XDEBUG_SESSION_START` or `http://localhost/?XDEBUG_SESSION_START`
 
 ### Docker Cheatsheet
 I have listed few commands you might find useful if you don't have much experience working with Docker below.

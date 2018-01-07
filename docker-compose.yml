@@ -2,29 +2,11 @@
 # Licence MIT
 version: '2'
 services:
-  base:
-    image: docfony:base
-    build:
-      context: .
-      dockerfile: base/Dockerfile
-    networks:
-      - symfony_dev
-
   php:
-      image: docfony:php-7.2
-      build:
-        context: .
-        dockerfile: php/Dockerfile
-      volumes:
-        - '../project:/var/www:cached'
-      networks:
-        - symfony_dev
-
-  composer-git:
-    image: docfony:composer-git
+    image: docfony:php-7.2
     build:
       context: .
-      dockerfile: composer-git/Dockerfile
+      dockerfile: php/Dockerfile
     volumes:
       - '../project:/var/www:cached'
     networks:
