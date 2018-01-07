@@ -1,19 +1,19 @@
-version: '3'
+# Maintainer Hadi Tajallaei
+# Licence MIT
+version: '2'
 services:
   php:
-    image: php:docfony-7.2
+    image: docfony:php-7.2
     build:
       context: .
       dockerfile: php/Dockerfile
-    ports:
-      - '9005:9005'
     volumes:
       - '../project:/var/www:cached'
     networks:
       - symfony_dev
 
   nginx:
-    image: nginx:docfony-1.13
+    image: docfony:nginx-1.13
     build:
       context: .
       dockerfile: nginx/Dockerfile
@@ -31,10 +31,8 @@ services:
       - '3306:3306'
     volumes:
       - 'dev-mysql:/var/lib/mysql'
-    environment:
-      MYSQL_DATABASE: "${MYSQL_DB_NAME}"
-      MYSQL_USER: "${MYSQL_USR}"
-      MYSQL_ALLOW_EMPTY_PASSWORD: "${MYSQL_EMPTY_PWD}"
+    env_file:
+      - .env
     networks:
       - symfony_dev
 
@@ -51,6 +49,11 @@ services:
 networks:
   symfony_dev:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.0.0/16
+          gateway: 172.25.0.1
 
 volumes:
   dev-mysql:
