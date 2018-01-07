@@ -8,7 +8,7 @@ services:
       context: .
       dockerfile: php/Dockerfile
     volumes:
-      - '../project:/var/www:cached'
+      - '../project:/var/www'
     networks:
       - symfony_dev
 
@@ -21,7 +21,7 @@ services:
       - '80:80'
       - '443:443'
     volumes:
-      - '../project:/var/www:cached'
+      - '../project:/var/www'
     networks:
       - symfony_dev
 
