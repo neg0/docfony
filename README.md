@@ -69,6 +69,7 @@ You may use GUI applications to manage your database by specifying `mysql` or `m
 ### Local Development
 You can view and edit your codes via `project` folder outside of `docfony` and change on your machine will be synchronised with running containers.
 >**Please Note** make sure your containers are running while you are making changes to your project to ensure data persistency all across containers with the host machine 
+
 >:apple: **Mac User Only** please edit the `docker-compose.yml` and add `:cached` at the end of shared volume, like an example below:
 ```yml
 volumes:
@@ -92,7 +93,7 @@ Mac loop-back interface by running the command below:
 ```bash
 $ sudo ifconfig en0 alias 10.254.254.254 255.255.255.0
 ```
-and now you could start your remote debug session via browser: `http://docfony.dev/?XDEBUG_SESSION_START` or `http://localhost/?XDEBUG_SESSION_START`
+and now you could start your remote debug session via browser: `http://docfony.docker/?XDEBUG_SESSION_START` or `http://localhost/?XDEBUG_SESSION_START`
 
 ### Docker Cheatsheet
 I have listed few commands you might find useful if you don't have much experience working with Docker below.
