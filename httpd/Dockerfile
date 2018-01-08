@@ -1,5 +1,8 @@
 FROM httpd:2.4
 
+LABEL licence = "MIT"
+LABEL maintainer = "Hadi Tajallaei"
+
 RUN apt-get update -y && apt-get install -y libapache2-mod-fcgid
 
 RUN mv /usr/lib/apache2/modules/mod_fcgid.so /usr/local/apache2/modules/mod_fcgid.so \
@@ -18,10 +21,9 @@ RUN echo "# Symfony App Virtual Host" >>  /usr/local/apache2/conf/httpd.conf \
     && echo "Include conf/symfony.conf" >> /usr/local/apache2/conf/httpd.conf \
     && mkdir -p /var/www \
     && usermod -u 5000 www-data \
-    && chown -R www-data:www-data /var/www \
-    && mkdir -p /var/log/apache2/
+    && chown -R www-data:www-data /var/www
 
-RUN ln -sf /dev/stdout /var/log/apache2/project_access.log \
-	&& ln -sf /dev/stderr /var/log/apache2/project_error.log
+RUN ln -sf /usr/local/apache2/logs/project_access.log \
+    && ln -sf /usr/local/apache2/logs/project_error.log
 
 VOLUME /var/www
