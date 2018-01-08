@@ -25,6 +25,18 @@ services:
     networks:
       - symfony_dev
 
+  httpd:
+    image: docfony:httpd-2.4
+    build:
+      context: .
+      dockerfile: httpd/Dockerfile
+    ports:
+      - '8080:80'
+    volumes:
+      - '../project:/var/www'
+    networks:
+      - symfony_dev
+
   mysql:
     image: mysql:5.7
     ports:
