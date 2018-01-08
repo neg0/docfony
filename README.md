@@ -1,6 +1,7 @@
 # Docfony - Docker Symfony 3.x
 * **PHP** _version 7.2_
 * **NGINX** _version 1.13_
+* **Apache (httpd)** _version 2.4_
 * **MySQL** _version 5.7_
 * **Mongo** _version 3.4_
 
@@ -37,6 +38,13 @@ root@d38cf:/var/www# exit
 Composer will download the necessary packages for your Symfony application and now you can view the app via your browser from following URL:
 `http://localhost`, you may also view your application via virtual host domain: `http://docfony.docker`
 >**Please Note** you need to add `docfony.docker` assigned to `127.0.0.1`  on your host machine (Mac/Linux in /etc/hosts and for Windows via Firewall settings)
+
+### NGINX and Apache (httpd)
+You can use both web servers to serve your symfony application, by default NGINX uses port `80` and Apache is accessible via port `8080` as below:
+```bash
+http://localhost:80
+http://localhost:8080
+```
 
 ### Symfony Parameters, Hosts and Ports
 Example of parameters being asked during Symfony installation below:
