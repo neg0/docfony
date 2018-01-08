@@ -1,4 +1,5 @@
 # Docfony - Docker Symfony 3.x
+![continuousphp](https://img.shields.io/continuousphp/git-hub/doctrine/dbal/master.svg) [![Read the Docs (version)](https://img.shields.io/readthedocs/pip/stable.svg)]()
 * **PHP** _version 7.2_
 * **NGINX** _version 1.13_
 * **Apache (httpd)** _version 2.4_
