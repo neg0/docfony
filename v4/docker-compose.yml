@@ -1,0 +1,71 @@
+version: '2'
+services:
+  php:
+    image: docfony:php-7.2
+    build:
+      context: .
+      dockerfile: php/Dockerfile
+    volumes:
+      - '../project:/var/www'
+    networks:
+      - symfony_dev
+
+  nginx:
+    image: docfony:nginx-1.13
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - '../project:/var/www'
+    networks:
+      - symfony_dev
+
+  httpd:
+    image: docfony:httpd-2.4
+    build:
+      context: .
+      dockerfile: httpd/Dockerfile
+    ports:
+      - '8080:80'
+    volumes:
+      - '../project:/var/www'
+    networks:
+      - symfony_dev
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - '3306:3306'
+    volumes:
+      - 'dev-mysql:/var/lib/mysql'
+    env_file:
+      - .env
+    networks:
+      - symfony_dev
+
+  mongo:
+      image: mongo:3.4
+      ports:
+        - '27017:27017'
+      volumes:
+        - 'dev-mongo:/data/db'
+        - 'dev-mongo-config:/data/configdb'
+      networks:
+        - symfony_dev
+
+networks:
+  symfony_dev:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.0.0/16
+          gateway: 172.25.0.1
+
+volumes:
+  dev-mysql:
+  dev-mongo:
+  dev-mongo-config:

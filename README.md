@@ -1,5 +1,5 @@
-# Docfony - Docker Symfony 3.x
-![continuousphp](https://img.shields.io/continuousphp/git-hub/doctrine/dbal/master.svg) ![Read the Docs (version)](https://img.shields.io/readthedocs/pip/stable.svg)  ![lastupdated](https://img.shields.io/badge/Last%20Updated-8th%20Jan%202018-blue.svg)
+# Docfony - Docker Symfony 4 and 3
+![continuousphp](https://img.shields.io/continuousphp/git-hub/doctrine/dbal/master.svg) ![Read the Docs (version)](https://img.shields.io/readthedocs/pip/stable.svg)  ![lastupdated](https://img.shields.io/badge/Last%20Updated-7th%20Apr%202018-blue.svg)
 * **PHP** _version 7.2_
 * **NGINX** _version 1.13_
 * **Apache (httpd)** _version 2.4_
@@ -12,6 +12,7 @@
 * Docker Compose  should be enabled
 * Symfony Framework 3.x
 
+>> This document subject to change due to addiing symfony 4
 ### Download and Installation
 Please ensure there is no similar service are running on the same ports on your host machine before start running the containers; after successfully cloning the repository, you should see a folder named **docfony**; please go inside the **docfony** and run `docker-compose` as below:
 ```bash

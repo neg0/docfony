@@ -1,5 +1,3 @@
-# Maintainer Hadi Tajallaei
-# Licence MIT
 version: '2'
 services:
   php:

@@ -13,7 +13,8 @@ RUN mv /usr/lib/apache2/modules/mod_fcgid.so /usr/local/apache2/modules/mod_fcgi
     && mv /usr/lib/apache2/modules/mod_proxy_http.so /usr/local/apache2/modules/mod_proxy_http.so \
     && echo "LoadModule proxy_http_module modules/mod_proxy_http.so" >> /usr/local/apache2/conf/httpd.conf \
     && mv /usr/lib/apache2/modules/mod_proxy_fcgi.so /usr/local/apache2/modules/mod_proxy_fcgi.so \
-    && echo "LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so" >> /usr/local/apache2/conf/httpd.conf
+    && echo "LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so" >> /usr/local/apache2/conf/httpd.conf \
+    && echo "LoadModule rewrite_module modules/mod_rewrite.so" >> /usr/local/apache2/conf/httpd.conf
 
 COPY httpd/symfony.conf /usr/local/apache2/conf/symfony.conf
 
@@ -23,7 +24,6 @@ RUN echo "# Symfony App Virtual Host" >>  /usr/local/apache2/conf/httpd.conf \
     && usermod -u 5000 www-data \
     && chown -R www-data:www-data /var/www
 
-RUN ln -sf /usr/local/apache2/logs/project_access.log \
-    && ln -sf /usr/local/apache2/logs/project_error.log
+RUN ln -sf /dev/stdout /usr/local/apache2/logs/project_error.log
 
 VOLUME /var/www
