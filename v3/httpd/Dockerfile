@@ -14,6 +14,7 @@ RUN mv /usr/lib/apache2/modules/mod_fcgid.so /usr/local/apache2/modules/mod_fcgi
     && echo "LoadModule proxy_http_module modules/mod_proxy_http.so" >> /usr/local/apache2/conf/httpd.conf \
     && mv /usr/lib/apache2/modules/mod_proxy_fcgi.so /usr/local/apache2/modules/mod_proxy_fcgi.so \
     && echo "LoadModule proxy_fcgi_module modules/mod_proxy_fcgi.so" >> /usr/local/apache2/conf/httpd.conf \
+    && echo "# Enabling Rewrite Module for Symfony htaccess" >> /usr/local/apache2/conf/httpd.conf \
     && echo "LoadModule rewrite_module modules/mod_rewrite.so" >> /usr/local/apache2/conf/httpd.conf
 
 COPY httpd/symfony.conf /usr/local/apache2/conf/symfony.conf

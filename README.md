@@ -10,16 +10,15 @@
 * Operating Systems supported by Docker _<small>(Please checkout <a href="https://docs.docker.com/engine/installation/#supported-platforms" target="_blank">Supported platforms</a>)</small>_
 * Docker version 17.x _<small>(Please visit <a href="https://www.docker.com/community-edition" target="_blank">Docker Community Edition</a>)</small>_
 * Docker Compose  should be enabled
-* Symfony Framework 3.x
+* Symfony Framework 4 and 3
 
->> This document subject to change due to addiing symfony 4
 ### Download and Installation
 Please ensure there is no similar service are running on the same ports on your host machine before start running the containers; after successfully cloning the repository, you should see a folder named **docfony**; please go inside the **docfony** and run `docker-compose` as below:
 ```bash
 $ git clone https://github.com/impixel/docfony.git
 $ cd docfony
-$ docker-compose up
 ```
+
 Docker daemon starts to download and build the required images to run your Symfony application. During process docker will create three virtual volumes for data presistency for both databases MySQL and Mongo:
 * __docfony-dev-mysql__ _It will store MySQL Database data files from_ `/var/lib/mysql` 
 * __docfony-dev-mongo__ _It will store Mongo Database data files from_ `/data/db`
@@ -29,12 +28,35 @@ However for development purpose volume for Symfony application is shared with yo
 
 >In addition to virtual volumes, Docker will also creates a **network** with **bridge** driver named `docfony_symfony_dev` to make the containers to communicate with each other
 
+>If you want to use Symfony 3, please use v3 and for symfony 4, use the v4.
+
+### Symfony 3
+```bash
+$ cd v3
+$ docker-compose up
+```
+
+### Symfony 4
+```bash
+$ cd v4
+$ docker-compose up
+```
 After successfully pulling and building the images required, you can see the log messages appearing on your terminal, please open a new terminal tab and connect to the **php** container to download and install your Symfony application as below:
+
+### Symfony 3
 ```bash
 $ docker-compose exec php /bin/bash
 root@d38cf:/var/www# composer create-project symfony/framework-standard-edition symfony_app 3.4
 root@d38cf:/var/www# exit
 ```
+
+### Symfony 4
+```bash
+$ docker-compose exec php /bin/bash
+root@d38cf:/var/www# composer create-project symfony/website-skeleton symfony_app
+root@d38cf:/var/www# exit
+```
+
 >**Please Note** Project name must be `symfony_app` as illustrated above due to NGINX path configuration.
 
 Composer will download the necessary packages for your Symfony application and now you can view the app via your browser from following URL:
@@ -86,12 +108,12 @@ volumes:
   - '../project:/var/www:cached'
 ```
 ### Re-Activate Symfony Debug Feature
-Now you may navigate to `project/symfony_app/web/app_dev.php` and edit line 15, you should see an array of `['127.0.0.1', '::1']`, which should be extended further by adding network Gateway IP address `172.25.0.1`. To see if debug toolbar appears or you can see development feature of symfony, please navigate to the following via your browser: `http://localhots/app_dev.php`.
+Now you may navigate to `project/symfony_app/web/app_dev.php` and `project/symfony_app/web/config.php` you should see an array of `['127.0.0.1', '::1']`, which should be extended further by adding network Gateway IP address `172.25.0.1`. To see if debug toolbar appears or you can see development feature of symfony, please navigate to the following via your browser: `http://localhots/app_dev.php`.
 In order to find your Gateway IP address _(This IP address should be: 172.25.0.1 as specified in the compose file)_, please run the following:
 ```bash
 $ docker network inspect docfony_symfony_dev --format="{{json .IPAM.Config}}"
 ```
-```bash
+```json
 [{"Subnet":"172.25.0.0/16","Gateway":"172.25.0.1"}]
 ```
 
