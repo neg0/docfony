@@ -24,6 +24,7 @@ RUN echo "# Symfony App Virtual Host" >>  /usr/local/apache2/conf/httpd.conf \
     && usermod -u 5000 www-data \
     && chown -R www-data:www-data /var/www
 
-RUN ln -sf /dev/stdout /usr/local/apache2/logs/project_error.log
+RUN ln -sf /dev/stdout /usr/local/apache2/logs/project_access.log \
+    && ln -sf /dev/stderr /usr/local/apache2/logs/project_error.log
 
 VOLUME /var/www
