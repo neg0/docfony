@@ -111,3 +111,7 @@ and now you could start your remote debug session via browser: `http://docfony.d
 ### Support and Help
 If you found an issue, please use git issues to report and if you wish to contribute to this project feel free to fork and create a pull request to the develop branch
 >_**Disclaimer:** Please don't use this to deploy in production, this project been built for Symfony enthusiasts to attract more contributors and prospect companies whom wish to give an enterprise level PHP Framework a quick try, without a worry of configuration and installation of all required packages_
+
+### License
+Regarding licensing and version of please visit: https://creativecommons.org/licenses/by-sa/4.0/ or read through license file included in the repository. 
+![CC Attribution-ShareAlike](https://licensebuttons.net/l/by-sa/3.0/88x31.png)
