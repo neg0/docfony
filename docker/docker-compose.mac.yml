@@ -6,12 +6,14 @@ services:
       context: .
       dockerfile: php/Dockerfile
     volumes:
-      - '../project:/var/www'
+      - '../project:/var/www:delegated'
+    ports:
+      - '8000:8000'
     networks:
       - symfony_dev
 
   nginx:
-    image: docfony:nginx-1.13
+    image: docfony:nginx-1.15
     build:
       context: .
       dockerfile: nginx/Dockerfile
@@ -19,7 +21,7 @@ services:
       - '80:80'
       - '443:443'
     volumes:
-      - '../project:/var/www'
+      - '../project:/var/www:delegated'
     networks:
       - symfony_dev
 
@@ -31,7 +33,7 @@ services:
     ports:
       - '8080:80'
     volumes:
-      - '../project:/var/www'
+      - '../project:/var/www:delegated'
     networks:
       - symfony_dev
 
@@ -63,7 +65,7 @@ networks:
       driver: default
       config:
         - subnet: 172.25.0.0/16
-          gateway: 172.25.0.1
+          gateway: 172.25.0.2
 
 volumes:
   dev-mysql:

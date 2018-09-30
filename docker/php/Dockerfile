@@ -1,4 +1,4 @@
-FROM php:7.2-fpm AS dev
+FROM php:7.2-fpm
 
 LABEL licence = "MIT"
 LABEL maintainer = "Hadi Tajallaei"
@@ -34,13 +34,13 @@ RUN apt-get update -y && apt-get install -y \
     && docker-php-ext-install sodium
 
 RUN pecl update-channels \
-    && pecl install mongodb-1.3.4 \
+    && pecl install mongodb-1.4.2 \
     && echo "extension=mongodb.so" >> /usr/local/etc/php/conf.d/docker-php-ext-mongodb.ini \
-    && pecl install apcu-5.1.9 \
+    && pecl install apcu-5.1.11 \
     && echo "extension=apcu.so" >> /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini \
     && pecl install amqp-1.9.3 \
     && echo "extension=amqp.so" >> /usr/local/etc/php/conf.d/docker-php-ext-amqp.ini \
-    && pecl install xdebug-2.6.0beta1
+    && pecl install xdebug-2.7.0alpha1
 
 COPY php/config/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 

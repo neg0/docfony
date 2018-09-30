@@ -1,4 +1,4 @@
-FROM nginx:1.13 AS dev
+FROM nginx:1.15
 
 LABEL licence = "MIT"
 LABEL maintainer = "Hadi Tajallaei"

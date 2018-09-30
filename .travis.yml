@@ -1,0 +1,20 @@
+sudo: required
+
+language: php
+
+services:
+  - docker
+
+before_install:
+  - cp docker/httpd/v3/symfony.conf docker/httpd/
+  - cp docker/nginx/v3/default.conf docker/nginx/
+
+script:
+  - docker-compose -f docker/docker-compose.yml up --build -d
+  - docker-compose -f docker/docker-compose.yml exec php bash
+  - composer create-project symfony/skeleton symfony_app
+  - curl -o index.html http://172.25.0.2
+
+after_success:
+  - docker-compose -f docker/docker-compose.yml stop
+  - docker-compose -f docker/docker-compose.yml down -v --remove-orphans

@@ -1,7 +1,7 @@
 # Docfony - Docker Symfony 4 and 3
 ![continuousphp](https://img.shields.io/continuousphp/git-hub/doctrine/dbal/master.svg) ![Read the Docs (version)](https://img.shields.io/readthedocs/pip/stable.svg)  ![lastupdated](https://img.shields.io/badge/Last%20Updated-7th%20Apr%202018-blue.svg)
 * **PHP** _version 7.2_
-* **NGINX** _version 1.13_
+* **NGINX** _version 1.15_
 * **Apache (httpd)** _version 2.4_
 * **MySQL** _version 5.7_
 * **Mongo** _version 3.4_
@@ -30,34 +30,20 @@ However for development purpose volume for Symfony application is shared with yo
 
 >If you want to use Symfony 3, please use v3 and for symfony 4, use the v4.
 
-### Symfony 3
 ```bash
-$ cd v3
-$ docker-compose up
+$ ./docker.sh
+```
+After successfully pulling and building the images required, you can see the log messages appearing on your terminal, and docker shell will automatically enters to container bash shell, now you can install your symfony application.
+
+
+### Quit and remove the containers
+In order to quit from container please exit the container and run the docker shell and choose the third option (Quit), as demonstrated below:
+```bash
+root@2ecca:/var/www#: exit
+$ ./docker.sh
 ```
 
-### Symfony 4
-```bash
-$ cd v4
-$ docker-compose up
-```
-After successfully pulling and building the images required, you can see the log messages appearing on your terminal, please open a new terminal tab and connect to the **php** container to download and install your Symfony application as below:
-
-### Symfony 3
-```bash
-$ docker-compose exec php /bin/bash
-root@d38cf:/var/www# composer create-project symfony/framework-standard-edition symfony_app 3.4
-root@d38cf:/var/www# exit
-```
-
-### Symfony 4
-```bash
-$ docker-compose exec php /bin/bash
-root@d38cf:/var/www# composer create-project symfony/website-skeleton symfony_app
-root@d38cf:/var/www# exit
-```
-
->**Please Note** Project name must be `symfony_app` as illustrated above due to NGINX path configuration.
+>**Please Note** Project name must be `symfony_app` as illustrated above due to NGINX and Apache (httpd) path configuration.
 
 Composer will download the necessary packages for your Symfony application and now you can view the app via your browser from following URL:
 `http://localhost`, you may also view your application via virtual host domain: `http://docfony.docker`
@@ -102,12 +88,7 @@ You may use GUI applications to manage your database by specifying `mysql` or `m
 You can view and edit your codes via `project` folder outside of `docfony` and change on your machine will be synchronised with running containers.
 >**Please Note** make sure your containers are running while you are making changes to your project to ensure data persistency all across containers with the host machine 
 
->:apple: **Mac User Only** please edit the `docker-compose.yml` and add `:cached` at the end of shared volume, like an example below:
-```yml
-volumes:
-  - '../project:/var/www:cached'
-```
-### Re-Activate Symfony Debug Feature
+### Re-Activate Symfony 3 Debug Feature
 Now you may navigate to `project/symfony_app/web/app_dev.php` and `project/symfony_app/web/config.php` you should see an array of `['127.0.0.1', '::1']`, which should be extended further by adding network Gateway IP address `172.25.0.1`. To see if debug toolbar appears or you can see development feature of symfony, please navigate to the following via your browser: `http://localhots/app_dev.php`.
 In order to find your Gateway IP address _(This IP address should be: 172.25.0.1 as specified in the compose file)_, please run the following:
 ```bash
@@ -126,34 +107,6 @@ Mac loop-back interface by running the command below:
 $ sudo ifconfig en0 alias 10.254.254.254 255.255.255.0
 ```
 and now you could start your remote debug session via browser: `http://docfony.docker/?XDEBUG_SESSION_START` or `http://localhost/?XDEBUG_SESSION_START`
-
-### Docker Cheatsheet
-I have listed few commands you might find useful if you don't have much experience working with Docker below.
-
-```bash
-$ docker-compose up -d
-```
-_Adding flag `-d` will make `docker-compose` to run containers in the background_
-
-```bash
-$ docker-compose logs
-```
-_It will displays logs in case containers running on detach mode_
-
-```bash
-$ docker-compose ps
-```
-_It will display the status of running containers_
-
-```bash
-$ docker-compose down
-```
-_It should be used to terminate the process of containers_
-
-```bash
-$ docker-compose build
-```
-_If an error occurs during build or pulling images, you can continue the process again with `build` command_
 
 ### Support and Help
 If you found an issue, please use git issues to report and if you wish to contribute to this project feel free to fork and create a pull request to the develop branch
