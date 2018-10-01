@@ -12,7 +12,6 @@ before_install:
 script:
   - docker-compose -f docker/docker-compose.yml up --build -d
   - docker-compose -f docker/docker-compose.yml exec php composer create-project symfony/skeleton symfony_app
-  - docker-compose -f docker/docker-compose.yml exec php curl -o index.html http://172.25.0.2
 
 after_success:
   - docker-compose -f docker/docker-compose.yml stop
