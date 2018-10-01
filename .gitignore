@@ -1,2 +1,4 @@
 .idea
 project
+docker/httpd/symfony.conf
+docker/nginx/default.conf
