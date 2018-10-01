@@ -1,6 +1,5 @@
 FROM httpd:2.4
 
-LABEL licence = "MIT"
 LABEL maintainer = "Hadi Tajallaei"
 
 RUN apt-get update -y && apt-get install -y libapache2-mod-fcgid

@@ -1,6 +1,5 @@
 FROM nginx:1.15
 
-LABEL licence = "MIT"
 LABEL maintainer = "Hadi Tajallaei"
 
 RUN mkdir -p /var/www \

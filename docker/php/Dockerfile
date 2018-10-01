@@ -1,6 +1,5 @@
 FROM php:7.2-fpm
 
-LABEL licence = "MIT"
 LABEL maintainer = "Hadi Tajallaei"
 
 RUN apt-get update -y && apt-get install -y \
