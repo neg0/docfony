@@ -9,6 +9,8 @@ build() {
     existingImage=`docker image ls | grep docfony`
     if [ -z "$existingImage" ]; then
         docker-compose -f docker/$compose_file build
+        rm docker/httpd/symfony.conf
+        rm docker/nginx/default.conf
     fi
     docker-compose -f docker/$compose_file up -d --remove-orphans
     docker-compose -f docker/$compose_file exec php bash
