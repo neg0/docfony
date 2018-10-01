@@ -1,5 +1,5 @@
 # Docfony - Docker Symfony 4 and 3
-![continuousphp](https://img.shields.io/continuousphp/git-hub/doctrine/dbal/master.svg) ![Read the Docs (version)](https://img.shields.io/readthedocs/pip/stable.svg)  ![lastupdated](https://img.shields.io/badge/Last%20Updated-7th%20Apr%202018-blue.svg)
+<img src="https://travis-ci.org/impixel/docfony.svg?branch=master" alt="build:passed">
 * **PHP** _version 7.2_
 * **NGINX** _version 1.15_
 * **Apache (httpd)** _version 2.4_
