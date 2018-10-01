@@ -38,7 +38,7 @@ services:
       - symfony_dev
 
   mysql:
-    image: mysql:5.7
+    image: mysql:8.0.12
     ports:
       - '3308:3306'
     volumes:
