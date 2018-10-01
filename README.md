@@ -28,8 +28,6 @@ However for development purpose volume for Symfony application is shared with yo
 
 >In addition to virtual volumes, Docker will also creates a **network** with **bridge** driver named `docfony_symfony_dev` to make the containers to communicate with each other
 
->If you want to use Symfony 3, please use v3 and for symfony 4, use the v4.
-
 ```bash
 $ ./docker.sh
 ```
@@ -61,7 +59,7 @@ Example of parameters being asked during Symfony installation below:
 ```yml
 parameters:
     database_host: mysql
-    database_port: 3306
+    database_port: 3308
     database_name: symfony
     database_user: root
     database_password: null
@@ -75,7 +73,7 @@ You may use GUI applications to manage your database by specifying `mysql` or `m
 
 * __MySQL Database__
     * Host: _mysql_
-    * Port: _3306_
+    * Port: _3308_
 * __Mongo Database__
     * Host: _mongo_
     * Port: _27017_

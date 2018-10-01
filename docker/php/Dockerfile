@@ -34,13 +34,13 @@ RUN apt-get update -y && apt-get install -y \
     && docker-php-ext-install sodium
 
 RUN pecl update-channels \
-    && pecl install mongodb-1.4.2 \
+    && pecl install mongodb-1.5.3 \
     && echo "extension=mongodb.so" >> /usr/local/etc/php/conf.d/docker-php-ext-mongodb.ini \
-    && pecl install apcu-5.1.11 \
+    && pecl install apcu-5.1.12 \
     && echo "extension=apcu.so" >> /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini \
     && pecl install amqp-1.9.3 \
     && echo "extension=amqp.so" >> /usr/local/etc/php/conf.d/docker-php-ext-amqp.ini \
-    && pecl install xdebug-2.7.0alpha1
+    && pecl install xdebug-2.7.0beta1
 
 COPY php/config/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
