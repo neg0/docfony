@@ -1,5 +1,7 @@
 sudo: required
 
+os: linux
+
 language: generic
 
 services:
@@ -12,6 +14,7 @@ before_install:
 script:
   - docker-compose -f docker/docker-compose.yml up --build -d
   - docker-compose -f docker/docker-compose.yml exec php composer create-project symfony/skeleton symfony_app
+  - docker-compose -f docker/docker-compose.yml exec php exit 0
 
 after_success:
   - docker-compose -f docker/docker-compose.yml stop
