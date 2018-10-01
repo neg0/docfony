@@ -16,8 +16,8 @@ script:
   - docker-compose -f docker/docker-compose.yml exec php composer create-project symfony/framework-standard-edition symfony_app
   - docker-compose -f docker/docker-compose.yml exec php curl -o debug-nginx.html http://172.25.0.2:80
   - docker-compose -f docker/docker-compose.yml exec php curl -o debug-httpd.html http://172.25.0.2:8080
-  - DEBUG_NGINX=docker-compose -f docker/docker-compose.yml exec php cat debug-nginx.html | grep 'Welcome to'
-  - DEBUG_HTTPD=docker-compose -f docker/docker-compose.yml exec php cat debug-httpd.html | grep 'Welcome to'
+  - DEBUG_NGINX=`docker-compose -f docker/docker-compose.yml exec php cat debug-nginx.html | grep 'Welcome to'`
+  - DEBUG_HTTPD=`docker-compose -f docker/docker-compose.yml exec php cat debug-httpd.html | grep 'Welcome to'`
   - if [ -z "$DEBUG_NGINX" ] || [ -z "$DEBUG_HTTPD" ]; then 
       echo "can not retrive default welcome page" 
       exit 1 
