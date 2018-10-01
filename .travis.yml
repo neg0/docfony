@@ -18,8 +18,7 @@ script:
   - docker-compose -f docker/docker-compose.yml exec php curl -o debug-httpd.html http://172.25.0.2:8080
   - export DEBUG_NGINX=docker-compose -f docker/docker-compose.yml exec php cat debug-nginx.html | grep 'Welcome to'
   - export DEBUG_HTTPD=docker-compose -f docker/docker-compose.yml exec php cat debug-httpd.html | grep 'Welcome to'
-  - if [ -z "$DEBUG_NGINX" ]; then echo "Can not retrive default welcome page from nginx"; exit 1 else exit 0 fi
-  - if [ -z "$DEBUG_NGINX" ]; then echo "Can not retrive default welcome page from nginx"; exit 1 else exit 0 fi
+  - if [ -z "$DEBUG_NGINX" ] || [ -z "$DEBUG_HTTPD" ]; then echo "can not retrive default welcome page from nginx"; exit 1; else exit 0; fi
 
 after_success:
   - docker-compose -f docker/docker-compose.yml stop
