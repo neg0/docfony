@@ -4,8 +4,8 @@
 * **PHP** _version 7.2_
 * **NGINX** _version 1.15_
 * **Apache (httpd)** _version 2.4_
-* **MySQL** _version 5.7_
-* **Mongo** _version 3.4_
+* **MySQL** _version 8.0_
+* **Mongo** _version 4.0_
 
 ## Requirements 
 * Operating Systems supported by Docker _<small>(Please checkout <a href="https://docs.docker.com/engine/installation/#supported-platforms" target="_blank">Supported platforms</a>)</small>_
@@ -13,7 +13,7 @@
 * Docker Compose  should be enabled
 * Symfony Framework 4 and 3
 
-### Download and Installation
+### Download
 Please ensure there is no similar service are running on the same ports on your host machine before start running the containers; after successfully cloning the repository, you should see a folder named **docfony**; please go inside the **docfony** and run `docker-compose` as below:
 ```bash
 $ git clone https://github.com/impixel/docfony.git
@@ -29,11 +29,27 @@ However for development purpose volume for Symfony application is shared with yo
 
 >In addition to virtual volumes, Docker will also creates a **network** with **bridge** driver named `docfony_symfony_dev` to make the containers to communicate with each other
 
+### Installation via Composer
+Please execute the Docker shell at the root of Docfony as presented below:
 ```bash
 $ ./docker.sh
 ```
-After successfully pulling and building the images required, you can see the log messages appearing on your terminal, and docker shell will automatically enters to container bash shell, now you can install your symfony application.
+It will display three options to choose from: 
+1) Symfony 3 
+2) Symfony 4 
+3) Quit
 
+After successfully pulling and building the images required, you can see the log messages appearing on your terminal, and docker shell will automatically enters to PHP container bash shell, now you can install your symfony application.
+
+**Symfony 4**
+```bash
+root@2ecca:/var/www#: composer create-project symfony/website-skeleton symfony_app
+```
+
+**Symfony 3**
+```bash
+root@2ecca:/var/www#: composer create-project symfony/framework-standard-edition symfony_app
+```
 
 ### Quit and remove the containers
 In order to quit from container please exit the container and run the docker shell and choose the third option (Quit), as demonstrated below:
@@ -88,13 +104,13 @@ You can view and edit your codes via `project` folder outside of `docfony` and c
 >**Please Note** make sure your containers are running while you are making changes to your project to ensure data persistency all across containers with the host machine 
 
 ### Re-Activate Symfony 3 Debug Feature
-Now you may navigate to `project/symfony_app/web/app_dev.php` and `project/symfony_app/web/config.php` you should see an array of `['127.0.0.1', '::1']`, which should be extended further by adding network Gateway IP address `172.25.0.1`. To see if debug toolbar appears or you can see development feature of symfony, please navigate to the following via your browser: `http://localhots/app_dev.php`.
-In order to find your Gateway IP address _(This IP address should be: 172.25.0.1 as specified in the compose file)_, please run the following:
+Now you may navigate to `project/symfony_app/web/app_dev.php` and `project/symfony_app/web/config.php` you should see an array of `['127.0.0.1', '::1']`, which should be extended further by adding network Gateway IP address `172.25.0.2`. To see if debug toolbar appears or you can see development feature of symfony, please navigate to the following via your browser: `http://localhots/app_dev.php`.
+In order to find your Gateway IP address _(This IP address should be: 172.25.0.2 as specified in the compose file)_, please run the following:
 ```bash
 $ docker network inspect docfony_symfony_dev --format="{{json .IPAM.Config}}"
 ```
 ```json
-[{"Subnet":"172.25.0.0/16","Gateway":"172.25.0.1"}]
+[{"Subnet":"172.25.0.0/16","Gateway":"172.25.0.2"}]
 ```
 
 ### Activating Xdebug
