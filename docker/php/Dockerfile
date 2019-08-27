@@ -1,4 +1,4 @@
-FROM php:7.2-fpm
+FROM php:7.4-rc-fpm-buster
 
 LABEL maintainer = "Hadi Tajallaei"
 
@@ -10,7 +10,6 @@ RUN apt-get update -y && apt-get install -y \
     libcurl4-openssl-dev \
     libssl-dev \
     libicu-dev \
-    librabbitmq-dev \
     libxrender1 \
     libzip-dev \
     libpng-dev \
@@ -18,10 +17,8 @@ RUN apt-get update -y && apt-get install -y \
     libfreetype6-dev \
     libxml2-dev \
     libfontconfig1 \
-    gcc-6-base \
     libc6 \
     libgcc1 \
-    libsodium18 \
     libsodium-dev \
     libbz2-dev \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
@@ -33,13 +30,11 @@ RUN apt-get update -y && apt-get install -y \
     && docker-php-ext-install sodium
 
 RUN pecl update-channels \
-    && pecl install mongodb-1.5.3 \
+    && pecl install mongodb-1.5.5 \
     && echo "extension=mongodb.so" >> /usr/local/etc/php/conf.d/docker-php-ext-mongodb.ini \
-    && pecl install apcu-5.1.12 \
+    && pecl install apcu-5.1.17	\
     && echo "extension=apcu.so" >> /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini \
-    && pecl install amqp-1.9.3 \
-    && echo "extension=amqp.so" >> /usr/local/etc/php/conf.d/docker-php-ext-amqp.ini \
-    && pecl install xdebug-2.7.0beta1
+    && pecl install xdebug-2.8.0beta2
 
 COPY php/config/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 

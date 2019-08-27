@@ -8,14 +8,11 @@ services:
   - docker
 
 before_install:
-  - cp docker/httpd/v3/symfony.conf docker/httpd/
-  - cp docker/nginx/v3/default.conf docker/nginx/
+  - docker-compose -f docker/docker-compose.yml up --build -d
 
 script:
-  - docker-compose -f docker/docker-compose.yml up --build -d
   - docker-compose -f docker/docker-compose.yml exec php composer create-project symfony/skeleton symfony_app
-  - docker-compose -f docker/docker-compose.yml exec php curl -o debug-nginx.html http://172.25.0.2:80
-  - docker-compose -f docker/docker-compose.yml exec php curl -o debug-httpd.html http://172.25.0.2:8080
+  - docker-compose -f docker/docker-compose.yml exec nginx curl -o debug-nginx.html http://0.0.0.0:80
 
 after_success:
   - docker-compose -f docker/docker-compose.yml stop

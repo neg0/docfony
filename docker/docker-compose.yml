@@ -1,14 +1,13 @@
-version: '2'
+version: "3"
 services:
   php:
-    image: docfony:php-7.2
+    image: docfony:php-7.4
     build:
       context: .
       dockerfile: php/Dockerfile
+    container_name: docfony-php
     volumes:
-      - '../project:/var/www'
-    ports:
-      - '8000:8000'
+      - "../:/var/www"
     networks:
       - symfony_dev
 
@@ -17,56 +16,52 @@ services:
     build:
       context: .
       dockerfile: nginx/Dockerfile
+    container_name: docfony-nginx
     ports:
-      - '80:80'
-      - '443:443'
+      - "80:80"
+      - "443:443"
     volumes:
-      - '../project:/var/www'
-    networks:
-      - symfony_dev
-
-  httpd:
-    image: docfony:httpd-2.4
-    build:
-      context: .
-      dockerfile: httpd/Dockerfile
-    ports:
-      - '8080:80'
-    volumes:
-      - '../project:/var/www'
+      - "../:/var/www"
     networks:
       - symfony_dev
 
   mysql:
-    image: mysql:8.0.12
+    image: mysql:8.0
+    container_name: docfony-mysql
     ports:
-      - '3308:3306'
+      - "3308:3306"
     volumes:
-      - 'dev-mysql:/var/lib/mysql'
+      - "dev-mysql:/var/lib/mysql"
     env_file:
       - .env
     networks:
       - symfony_dev
 
   mongo:
-      image: mongo:4.0.2-xenial
+      image: mongo:4-bionic
+      container_name: docfony-mongo
       ports:
-        - '27017:27017'
+        - "27017:27017"
       volumes:
-        - 'dev-mongo:/data/db'
-        - 'dev-mongo-config:/data/configdb'
+        - "dev-mongo:/data/db"
+        - "dev-mongo-config:/data/configdb"
       networks:
         - symfony_dev
+
+  redis:
+    image: redis:5.0
+    container_name: docfony-redis
+    volumes:
+      - "dev-redis:/data"
+    networks:
+      - symfony_dev
 
 networks:
   symfony_dev:
     driver: bridge
-    ipam:
-      config:
-        - subnet: 172.25.0.0/16
-          gateway: 172.25.0.2
 
 volumes:
   dev-mysql:
   dev-mongo:
   dev-mongo-config:
+  dev-redis:
