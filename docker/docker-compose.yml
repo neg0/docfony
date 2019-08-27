@@ -6,6 +6,8 @@ services:
       context: ..
       dockerfile: docker/php/Dockerfile
     container_name: docfony-php
+    environment:
+      XDEBUG_CONFIG: remote_host={{0.0.0.0}}
     volumes:
       - "../:/var/www"
     networks:

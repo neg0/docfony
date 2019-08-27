@@ -45,7 +45,7 @@ server {
 server {
     listen          8090 default_server;
     listen          [::]:8090 default_server;
-    server_name     example.dev;
+    server_name     docfony-health.dev;
     root            /var/http/health_check;
     index           index.php;
 

@@ -40,8 +40,7 @@ Docker daemon starts to download and build the required images to run your Symfo
 
 > For development purpose volume for Symfony application is shared with your machine (Host) and is accessible via folder outside of **docfony**, called **project**.
 This shall become a virtual volume in production
-
-> In addition to virtual volumes, Docker will also creates a **network** with **bridge** driver 
+In addition to virtual volumes, Docker will also creates a **network** with **bridge** driver
 named `docfony_symfony_dev` to make the containers to communicate with each other
 
 ### Installation via Composer
@@ -102,6 +101,9 @@ You can view and edit your codes via `project` folder outside of `docfony` and c
 ### Support and Help
 If you found an issue, please use git issues to report and if you wish to contribute to this project feel free to fork and create a pull request to the develop branch
 >_**Disclaimer:** Please don't use this to deploy in production, this project been built for Symfony enthusiasts to attract more contributors and prospect companies whom wish to give an enterprise level PHP Framework a quick try, without a worry of configuration and installation of required packages_
+
+### Credits
+Built with :heart: and maintained at beautiful London
 
 ### License
 Regarding licensing and version of please visit: [Creative Commons License](https://creativecommons.org/licenses/by-sa/4.0/) or read through license file `LICENSE.md` included in the repository.
