@@ -53,17 +53,11 @@ your symfony application.
 
     root@2ecca:/var/www#: composer create-project symfony/skeleton project
 
-### Quit and remove the containers
-In order to quit and remove containers run the following make command:
-
-    $ make down
-
->**Please Note** Project name must be `symfony_app` as illustrated above due to NGINX and Apache (httpd) path configuration.
+>**Please Note** Project name must be `project` as illustrated above due to NGINX path configuration.
 
 Composer will download the necessary packages for your Symfony application and now you can view the app via your browser from following URL:
 `http://localhost`, you may also view your application via virtual host domain: `http://docfony.docker`
 >**Please Note** you need to add `docfony.docker` assigned to `127.0.0.1`  on your host machine (Mac/Linux in /etc/hosts and for Windows via Firewall settings)
-
 
 ### Symfony Parameters, Hosts and Ports
 Example of parameters being asked during Symfony installation below:
@@ -92,6 +86,13 @@ You may use GUI applications to manage your database by specifying `mysql` or `m
     * Port: _9001_
 
 > **Please Note** you may also use IP address `127.0.0.1` as a host for each service instead.
+
+
+### Quit and remove the containers
+In order to quit and remove containers run the following make command:
+
+    $ make down
+
 
 ### Local Development
 You can view and edit your codes via `project` folder outside of `docfony` and change on your machine will be synchronised with running containers.
