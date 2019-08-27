@@ -6,7 +6,7 @@
 * **NGINX** _1.17_
 * **MySQL** _8.0_
 * **Mongo** _4.0_
-* **Redis** &nbsp;&nbsp;&nbsp;_5.0_
+* **Redis** &nbsp;&nbsp;_5.0_
 
 ## Requirements 
 * Operating Systems supported by Docker _<small>(Please checkout <a href="https://docs.docker.com/engine/installation/#supported-platforms" target="_blank">Supported platforms</a>)</small>_
