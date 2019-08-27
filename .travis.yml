@@ -8,11 +8,11 @@ services:
   - docker
 
 before_install:
-  - docker-compose -f docker/docker-compose.yml up --build -d
+  - make up
 
 script:
-  - docker-compose -f docker/docker-compose.yml exec php composer create-project symfony/skeleton symfony_app
-  - docker-compose -f docker/docker-compose.yml exec nginx curl -o debug-nginx.html http://0.0.0.0:80
+  - docker-compose -f docker/docker-compose.yml exec php composer create-project symfony/skeleton project
+  - docker-compose -f docker/docker-compose.yml exec php curl -f http://nginx:8090 || exit 1
 
 after_success:
   - docker-compose -f docker/docker-compose.yml stop

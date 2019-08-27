@@ -3,8 +3,8 @@ services:
   php:
     image: docfony:php-7.4
     build:
-      context: .
-      dockerfile: php/Dockerfile
+      context: ..
+      dockerfile: docker/php/Dockerfile
     container_name: docfony-php
     volumes:
       - "../:/var/www"
@@ -14,8 +14,8 @@ services:
   nginx:
     image: docfony:nginx-1.15
     build:
-      context: .
-      dockerfile: nginx/Dockerfile
+      context: ..
+      dockerfile: docker/nginx/Dockerfile
     container_name: docfony-nginx
     ports:
       - "80:80"

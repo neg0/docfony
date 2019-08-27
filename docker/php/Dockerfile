@@ -36,9 +36,9 @@ RUN pecl update-channels \
     && echo "extension=apcu.so" >> /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini \
     && pecl install xdebug-2.8.0beta2
 
-COPY php/config/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+COPY docker/php/config/xdebug.ini /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
-COPY php/config/php.ini /usr/local/etc/php/
+COPY docker/php/config/php.ini /usr/local/etc/php/
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && composer --version
@@ -53,7 +53,7 @@ RUN mkdir -p /var/http/health_check \
     && usermod -u 5000 www-data \
     && chown -R www-data:www-data /var/http/health_check
 
-COPY php/config/health.php /var/http/health_check/index.php
+COPY docker/php/config/health.php /var/http/health_check/index.php
 VOLUME /var/http/health_check
 
 HEALTHCHECK \
