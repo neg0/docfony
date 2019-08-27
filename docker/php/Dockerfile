@@ -45,4 +45,18 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 RUN chown -R www-data:www-data /var/www
 
+VOLUME /var/www
+
 WORKDIR /var/www
+
+RUN mkdir -p /var/http/health_check \
+    && usermod -u 5000 www-data \
+    && chown -R www-data:www-data /var/http/health_check
+
+COPY php/config/health.php /var/http/health_check/index.php
+VOLUME /var/http/health_check
+
+HEALTHCHECK \
+  --interval=1m \
+  --timeout=10s \
+  CMD curl -f http://nginx:8090 || exit 1

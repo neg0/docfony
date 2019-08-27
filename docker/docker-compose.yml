@@ -34,25 +34,40 @@ services:
       - "dev-mysql:/var/lib/mysql"
     env_file:
       - .env
+    healthcheck:
+      test: mysql -uroot -ppassword -e "use mysql; describe servers;" || exit 1
+      interval: 1m
+      timeout: 10s
+      retries: 3
     networks:
       - symfony_dev
 
   mongo:
-      image: mongo:4-bionic
-      container_name: docfony-mongo
-      ports:
-        - "27017:27017"
-      volumes:
-        - "dev-mongo:/data/db"
-        - "dev-mongo-config:/data/configdb"
-      networks:
-        - symfony_dev
+    image: mongo:4-bionic
+    container_name: docfony-mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - "dev-mongo:/data/db"
+      - "dev-mongo-config:/data/configdb"
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet || exit 1
+      interval: 1m
+      timeout: 10s
+      retries: 3
+    networks:
+      - symfony_dev
 
   redis:
     image: redis:5.0
     container_name: docfony-redis
     volumes:
       - "dev-redis:/data"
+    healthcheck:
+      test: redis-cli info stats || exit 1
+      interval: 1m
+      timeout: 10s
+      retries: 3
     networks:
       - symfony_dev
 
